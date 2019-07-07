@@ -6,9 +6,16 @@
 #include <string.h>
 #include <string>
 
+#include <jni.h>
+#include <stdio.h>
+#include <string>
+#include "aes/aes.h"
+#include "aes/aes.c"
+
 
 
 #define SECUREKEY "s3cr3tS3cur3K3y"
+
 
 
 
