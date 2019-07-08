@@ -14,5 +14,8 @@
     <style name="redColor3">
         <item name="stColorBackground">#AB3428</item>
     </style>
+    <style name="greenColor2">
+        <item name="stColorBackground">#2CDA9D</item>
+    </style>
 
 </resources>

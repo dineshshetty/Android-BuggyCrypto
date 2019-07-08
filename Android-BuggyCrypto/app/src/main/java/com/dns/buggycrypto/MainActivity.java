@@ -1,6 +1,7 @@
 package com.dns.buggycrypto;
 
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -16,63 +17,44 @@ import com.android.volley.toolbox.HttpHeaderParser;
 
 import com.crowdfire.cfalertdialog.CFAlertDialog;
 import com.muddzdev.styleabletoast.StyleableToast;
-import com.scottyab.aescrypt.AESCrypt;
-
 import java.io.UnsupportedEncodingException;
 
-
 public class MainActivity extends AppCompatActivity {
-
-
-    static {
-        try {
-            System.loadLibrary("getkey");
-        } catch (UnsatisfiedLinkError ule) {
-            Log.e("HelloC", "WARNING: Could not load native library: " + ule.getMessage());
-        }
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String secureKey = stringKeyFromJNI();
-        System.out.println(secureKey);
+        String documentID = "1337133713371337";
+        String signed_document_id = signDocumentID(documentID);
 
-        String documentID = "1337";
-        String hashedDocumentId = signDocumentID(documentID, secureKey);
-
-
-        performWebRequest(documentID,"http://192.168.56.1:5000");
-
+        performWebRequest(documentID,signed_document_id,"http://192.168.56.1:5000");
 
 
     }
 
-    private String signDocumentID(String documentID, String secureKey) {
+    private String signDocumentID(String documentID) {
         System.out.println("Document ID = "+documentID);
-        System.out.println("secureKey = "+secureKey);
-
+        String signedDocumentID = "";
         try {
-            String encryptedMsg = AESCrypt.encrypt(secureKey,documentID);
-            System.out.println("encryptedMsg = "+encryptedMsg);
-         //   System.out.println("decryptedMSG = "+AESCrypt.decrypt(secureKey,encryptedMsg));
-            return encryptedMsg;
+            CryptoClass crypt = new CryptoClass();;
+            signedDocumentID = crypt.aesEncryptedString(documentID);
+            System.out.println(signedDocumentID);
+            return signedDocumentID;
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-
-        return documentID;
+        return signedDocumentID;
     }
 
-    private void performWebRequest(String document_id, String login_url) {
+    private void performWebRequest(String document_id, String signed_document_id, String login_url) {
 
         WebRequest requestBody = new WebRequest();
-        requestBody.setDocumentId("1337");
+        requestBody.setDocumentId(document_id);
+        requestBody.setSignedDocumentId(signed_document_id);
 
         NetworkRequest<WebResponse> request =
                 NetworkRequest.createWithErrorListener(Request.Method.POST, "show_data",
@@ -91,9 +73,16 @@ public class MainActivity extends AppCompatActivity {
 
                 if (response.getSuccess()) {
                     System.out.println(response.getWebRequestMessage());
+                    System.out.println("Response hash = "+response.getWebRequestSignedHash());
+                    System.out.println("Signature Crack Status = "+response.getRequestStatus());
+
+                    if(response.getRequestStatus().contains("Congratulations")){
+                        StyleableToast.makeText(getApplicationContext(), "Congratulations on cracking the signing!", Toast.LENGTH_LONG, R.style.greenColor2).show();
+                    } else{
+                        StyleableToast.makeText(getApplicationContext(), "Try harder!", Toast.LENGTH_LONG, R.style.redColor3).show();
+                    }
                 }else{
                     System.out.println("Response Error. Something went wrong!");
-
                 }
             }
         };
