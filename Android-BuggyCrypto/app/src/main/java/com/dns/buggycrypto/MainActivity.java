@@ -1,10 +1,19 @@
 package com.dns.buggycrypto;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 
@@ -21,16 +30,34 @@ import java.io.UnsupportedEncodingException;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showMainCryptoOptions();
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        showMainCryptoOptions();
 
-        String documentID = "1337133713371337";
-        String signed_document_id = signDocumentID(documentID);
+        Button saveButton = (Button) findViewById(R.id.buttonShowOptions);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMainCryptoOptions();
+            }
+        });
 
-        performWebRequest(documentID,signed_document_id,"http://192.168.56.1:5000");
-
+//        String documentID = "1337133713371337";
+//        String signed_document_id = signDocumentID(documentID);
+//
+//        performWebRequest(documentID,signed_document_id,"http://192.168.56.1:5000");
+//
+//        showMainCryptoOptions();
 
     }
 
@@ -76,10 +103,12 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println("Response hash = "+response.getWebRequestSignedHash());
                     System.out.println("Signature Crack Status = "+response.getRequestStatus());
 
-                    if(response.getRequestStatus().contains("Congratulations")){
+                    if(response.getRequestStatus().contains("Congratulation")){
                         StyleableToast.makeText(getApplicationContext(), "Congratulations on cracking the signing!", Toast.LENGTH_LONG, R.style.greenColor2).show();
+                        System.out.println("Congratulations on cracking the signing!");
                     } else{
                         StyleableToast.makeText(getApplicationContext(), "Try harder!", Toast.LENGTH_LONG, R.style.redColor3).show();
+                        System.out.println("Try harder!");
                     }
                 }else{
                     System.out.println("Response Error. Something went wrong!");
@@ -125,15 +154,138 @@ public class MainActivity extends AppCompatActivity {
             .setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT)
             .setTitle("Select Option")
             .setMessage("What do you want to do?")
-            .addButton("AES encrypt the plaintext secret file using Static Key", -1, -1, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, (dialog, which) -> {
-                Toast.makeText(MainActivity.this, "Upgrade tapped", Toast.LENGTH_SHORT).show();
-
-                dialog.dismiss();
+            .addButton("Secure AES encryption using Static Key", -1, -1, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, (dialog, which) -> {
+       //         Toast.makeText(MainActivity.this, "AES encrypt the plaintext input using Static Key", Toast.LENGTH_SHORT).show();
+                doSimpleCryptoStuff();
+             //   dialog.dismiss();
             })
-            .addButton("AES encrypt the plaintext secret file - using JNI key", -1, -1, CFAlertDialog.CFAlertActionStyle.NEGATIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, (dialog, which) -> {
+            .addButton("Secure AES encryption using JNI key", -1, -1, CFAlertDialog.CFAlertActionStyle.NEGATIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, (dialog, which) -> {
+                doJNIKeyCryptoStuff();
+             //   dialog.dismiss();
 
-            });
+            }).addButton("AES Request Signing using JNI key", -1, -1, CFAlertDialog.CFAlertActionStyle.NEGATIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, (dialog, which) -> {
+                    doKeySigningStuff();
+                    //   dialog.dismiss();
+
+                });
         builder.show();
 
     }
+
+    private void doKeySigningStuff() {
+        String documentID = "1337133713371337";
+        String signed_document_id = signDocumentID(documentID.trim());
+        performWebRequest(documentID,signed_document_id,"http://192.168.56.1:5000");
+    }
+
+
+
+    private void doSimpleCryptoStuff() {
+
+        final EditText newTextEditText = new EditText(this);
+        newTextEditText.setSingleLine();
+        newTextEditText.setHint("PlainText Message");
+        //newMasterPassEditText.setTransformationMethod(new PasswordTransformationMethod());
+        //android:inputType="textPassword"
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        lp.setMargins(50,50,50,50);
+        newTextEditText.setLayoutParams(lp);
+        RelativeLayout container = new RelativeLayout(this);
+        RelativeLayout.LayoutParams rlParams=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+        container.setLayoutParams(rlParams);
+        container.addView(newTextEditText);
+
+
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("Enter String to Encrypt")
+                //  .setMessage("Summary message")
+                .setView(container)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String newPlainText = String.valueOf(newTextEditText.getText()).trim();
+                        saveInputToPreferenceFile("plaintext_string",newPlainText.trim(),R.string.static_key_encryption_file);
+
+                        try {
+                            CryptoClass crypt = new CryptoClass();
+                            String cipherText = crypt.simpleAesEncryptedString(newPlainText.trim());
+                            System.out.println(cipherText.trim());
+                            saveInputToPreferenceFile("secure_encrypted_string",cipherText.trim(),R.string.static_key_encryption_file);
+                            Toast.makeText(MainActivity.this, "After Encryption : " + cipherText.trim(), Toast.LENGTH_LONG).show();
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .create();
+        dialog.show();
+    }
+
+
+    private void doJNIKeyCryptoStuff() {
+
+        final EditText newTextEditText = new EditText(this);
+        newTextEditText.setSingleLine();
+        newTextEditText.setHint("PlainText Message");
+        //newMasterPassEditText.setTransformationMethod(new PasswordTransformationMethod());
+        //android:inputType="textPassword"
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        lp.setMargins(50,50,50,50);
+        newTextEditText.setLayoutParams(lp);
+        RelativeLayout container = new RelativeLayout(this);
+        RelativeLayout.LayoutParams rlParams=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+        container.setLayoutParams(rlParams);
+        container.addView(newTextEditText);
+
+
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("Enter String to Encrypt")
+                //  .setMessage("Summary message")
+                .setView(container)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String newPlainText = String.valueOf(newTextEditText.getText()).trim();
+                        saveInputToPreferenceFile("plaintext_string",newPlainText.trim(),R.string.jni_key_encryption_file);
+
+                        try {
+                            CryptoClass crypt = new CryptoClass();
+                            String cipherText = crypt.aesEncryptedString(newPlainText.trim());
+                            System.out.println(cipherText.trim());
+                            saveInputToPreferenceFile("secure_encrypted_string",cipherText.trim(),R.string.jni_key_encryption_file);
+                            Toast.makeText(MainActivity.this, "After Encryption : " + cipherText.trim(), Toast.LENGTH_LONG).show();
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .create();
+        dialog.show();
+    }
+
+    public void saveInputToPreferenceFile(String key, String value, int sharedPrefFile) {
+
+        Context context = getApplicationContext();
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                getString(sharedPrefFile), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(key, value);
+        editor.commit();
+
+    }
+
 }

@@ -31,6 +31,8 @@ public class CryptoClass {
  //   String key = "This is the super secret key 123";
     String key = stringKeyFromJNI().trim();
 
+    String simple_key = "This is the super secret key 123";
+
 
     //	The initialization vector used by the encryption function
     byte[] ivBytes = {
@@ -109,6 +111,16 @@ public class CryptoClass {
     public String aesEncryptedString(String theString) throws UnsupportedEncodingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
         // TODO Auto-generated method stub
         byte[] keyBytes = key.getBytes("UTF-8");
+        plainText = theString;
+        cipherData = CryptoClass.aes256encrypt(ivBytes, keyBytes, plainText.getBytes("UTF-8"));
+        cipherText = Base64.encodeToString(cipherData, Base64.DEFAULT);
+        return cipherText;
+    }
+
+
+    public String simpleAesEncryptedString(String theString) throws UnsupportedEncodingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+        // TODO Auto-generated method stub
+        byte[] keyBytes = simple_key.getBytes("UTF-8");
         plainText = theString;
         cipherData = CryptoClass.aes256encrypt(ivBytes, keyBytes, plainText.getBytes("UTF-8"));
         cipherText = Base64.encodeToString(cipherData, Base64.DEFAULT);
