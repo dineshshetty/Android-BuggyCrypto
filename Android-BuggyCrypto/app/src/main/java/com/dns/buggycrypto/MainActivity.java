@@ -79,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void performWebRequest(String document_id, String signed_document_id, String login_url) {
 
+        document_id = document_id.trim();
+        signed_document_id = signed_document_id.trim();
         WebRequest requestBody = new WebRequest();
         requestBody.setDocumentId(document_id);
         requestBody.setSignedDocumentId(signed_document_id);
@@ -154,12 +156,14 @@ public class MainActivity extends AppCompatActivity {
             .setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT)
             .setTitle("Select Option")
             .setMessage("What do you want to do?")
-            .addButton("Secure AES encryption using Static Key", -1, -1, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, (dialog, which) -> {
+            .addButton("Secure AES encryption using Method I", -1, -1, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, (dialog, which) -> {
        //         Toast.makeText(MainActivity.this, "AES encrypt the plaintext input using Static Key", Toast.LENGTH_SHORT).show();
+                //"Secure AES encryption using Static Key"
                 doSimpleCryptoStuff();
              //   dialog.dismiss();
             })
-            .addButton("Secure AES encryption using JNI key", -1, -1, CFAlertDialog.CFAlertActionStyle.NEGATIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, (dialog, which) -> {
+            .addButton("Secure AES encryption using Method II", -1, -1, CFAlertDialog.CFAlertActionStyle.NEGATIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, (dialog, which) -> {
+               //"Secure AES encryption using JNI key"
                 doJNIKeyCryptoStuff();
              //   dialog.dismiss();
 
