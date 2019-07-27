@@ -2,5 +2,7 @@
     <string name="app_name">Android-BuggyCrypto</string>
     <string name="static_key_encryption_file">StaticKeyEncryptionPrefs</string>
     <string name="jni_key_encryption_file">JNIKeyEncryptionPrefs</string>
+    <string name="obfuscated_jni_key_encryption_file">ObfuscatedJNIKeyEncryptionPrefs</string>
+
 
 </resources>

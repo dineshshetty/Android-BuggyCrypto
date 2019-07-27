@@ -29,6 +29,14 @@ import com.muddzdev.styleabletoast.StyleableToast;
 import java.io.UnsupportedEncodingException;
 
 public class MainActivity extends AppCompatActivity {
+    static {
+        try {
+            System.loadLibrary("getkey");
+        } catch (UnsatisfiedLinkError ule) {
+            Log.e("HelloC", "WARNING: Could not load native library: " + ule.getMessage());
+        }
+    }
+
 
 
     @Override
@@ -149,6 +157,9 @@ public class MainActivity extends AppCompatActivity {
 
     public native String  stringKeyFromJNI();
 
+    public native String  stringObfuscatedKeyFromJNI();
+
+
 
     private void showMainCryptoOptions() {
 
@@ -167,7 +178,13 @@ public class MainActivity extends AppCompatActivity {
                 doJNIKeyCryptoStuff();
              //   dialog.dismiss();
 
-            }).addButton("AES Request Signing using JNI key", -1, -1, CFAlertDialog.CFAlertActionStyle.NEGATIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, (dialog, which) -> {
+            }).addButton("Secure AES encryption using Method III", -1, -1, CFAlertDialog.CFAlertActionStyle.NEGATIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, (dialog, which) -> {
+                    //"Secure AES encryption using JNI key"
+                    doObfuscatedJNICryptoStuff();
+
+                    //   dialog.dismiss();
+
+                }).addButton("AES Request Signing using JNI key", -1, -1, CFAlertDialog.CFAlertActionStyle.NEGATIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, (dialog, which) -> {
                     doKeySigningStuff();
                     //   dialog.dismiss();
 
@@ -207,8 +224,14 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         String server_Address = String.valueOf(newTextEditText.getText()).trim();
                         try {
-                            //performWebRequest(documentID,signed_document_id,"http://192.168.56.1:5000");
-                            performWebRequest(documentID,signed_document_id,server_Address);
+                            if(server_Address.isEmpty()){
+                                //when blank user input, use default genymotion url
+                                performWebRequest(documentID,signed_document_id,"http://192.168.56.1:5000".trim());
+
+                            }else{
+                                performWebRequest(documentID,signed_document_id,server_Address);
+
+                            }
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -259,6 +282,56 @@ public class MainActivity extends AppCompatActivity {
                             String cipherText = crypt.simpleAesEncryptedString(newPlainText.trim());
                             System.out.println(cipherText.trim());
                             saveInputToPreferenceFile("secure_encrypted_string",cipherText.trim(),R.string.static_key_encryption_file);
+                            Toast.makeText(MainActivity.this, "After Encryption : " + cipherText.trim(), Toast.LENGTH_LONG).show();
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .create();
+        dialog.show();
+    }
+
+
+    private void doObfuscatedJNICryptoStuff() {
+
+        final EditText newTextEditText = new EditText(this);
+        newTextEditText.setSingleLine();
+        newTextEditText.setHint("PlainText Message");
+        //newMasterPassEditText.setTransformationMethod(new PasswordTransformationMethod());
+        //android:inputType="textPassword"
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        lp.setMargins(50,50,50,50);
+        newTextEditText.setLayoutParams(lp);
+        RelativeLayout container = new RelativeLayout(this);
+        RelativeLayout.LayoutParams rlParams=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+        container.setLayoutParams(rlParams);
+        container.addView(newTextEditText);
+
+
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("Enter String to Encrypt")
+                //  .setMessage("Summary message")
+                .setView(container)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String newPlainText = String.valueOf(newTextEditText.getText()).trim();
+                        saveInputToPreferenceFile("plaintext_string",newPlainText.trim(),R.string.obfuscated_jni_key_encryption_file);
+
+                        try {
+
+                            CryptoClass crypt = new CryptoClass();
+                            String cipherText = crypt.obfuscatedAesEncryptedString(newPlainText.trim());
+                            System.out.println(cipherText.trim());
+                            saveInputToPreferenceFile("secure_encrypted_string",cipherText.trim(),R.string.obfuscated_jni_key_encryption_file);
                             Toast.makeText(MainActivity.this, "After Encryption : " + cipherText.trim(), Toast.LENGTH_LONG).show();
 
                         } catch (Exception e) {

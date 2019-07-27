@@ -19,25 +19,38 @@ app = Flask(__name__)
 makejson = json.dumps
 
 def decrypt(encrypted_text,key):
+    print "========================"
+    print "Entered decrypt"
     encr = encrypted_text
+    print "encr before base64 decode = ",encr
     encr = encr.decode("base64")
+    print "encr after base64 decode = ",encr
+    print "key before utf-8 decode = ",key
     key = key.decode('utf-8')
+    print "key after utf-8 decode = ",key
+    print "========================"
     iv = 16 * '\x00'
     cipher = AES.new(key, AES.MODE_CBC, iv)
     decrypt = cipher.decrypt(encr)
+    #decrypted_text = decrypt.decode('utf-8')
     decrypted_text = decrypt.decode('utf-8')
+    print "########################"
+    print "decrypted_text = ",decrypted_text
     unpadded = unpad(decrypted_text)
+    print "unpadded = ",unpadded
     return unpadded
 
 @app.route('/show_data', methods=['POST'])
 def show_data():
     print "entererd now"
-    key = "s1s1s1s1s1s1s1s1s1s1s1s1s1s1s1s1"
+    key = "y0u3c4ntf1ndth1skeyc0zits0s3cur3"
     req_data = request.get_json()
     print req_data
 
     documentID = req_data['documentId']
+    print "documentID = ",documentID
     signedDocumentID = req_data['signedDocumentID']
+    print "signedDocumentID = ",signedDocumentID
 
     decryptedDocumentID = decrypt(signedDocumentID,key)
     print "decryptedDocumentID= "+decryptedDocumentID
@@ -48,9 +61,13 @@ def show_data():
             print "Congratulations!!"
         else:
             data = {"message" : documentID,"signed_hash" : decryptedDocumentID,"status" : "Failed!"}
+            print "documentID = ",documentID
+            print "decryptedDocumentID = ", decryptedDocumentID
             print "Oops!!"
     else:
         data = {"message" : documentID,"signed_hash" : decryptedDocumentID,"status" : "Failed!"}
+        print "documentID = ",documentID
+        print "decryptedDocumentID = ", decryptedDocumentID
         print "Oops!!"
     return makejson(data)
 
