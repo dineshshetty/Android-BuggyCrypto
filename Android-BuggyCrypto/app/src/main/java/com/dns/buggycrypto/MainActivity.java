@@ -175,7 +175,46 @@ public class MainActivity extends AppCompatActivity {
     private void doKeySigningStuff() {
         String documentID = "1337133713371337";
         String signed_document_id = signDocumentID(documentID.trim());
-        performWebRequest(documentID,signed_document_id,"http://192.168.56.1:5000");
+        final EditText newTextEditText = new EditText(this);
+        newTextEditText.setSingleLine();
+        newTextEditText.setHint("EG: http://192.168.56.1:5000");
+        //newMasterPassEditText.setTransformationMethod(new PasswordTransformationMethod());
+        //android:inputType="textPassword"
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        lp.setMargins(50,50,50,50);
+        newTextEditText.setLayoutParams(lp);
+        RelativeLayout container = new RelativeLayout(this);
+        RelativeLayout.LayoutParams rlParams=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+        container.setLayoutParams(rlParams);
+        container.addView(newTextEditText);
+
+
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("Enter Server Address to Connect to")
+                //  .setMessage("Summary message")
+                .setView(container)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String server_Address = String.valueOf(newTextEditText.getText()).trim();
+                        try {
+                            //performWebRequest(documentID,signed_document_id,"http://192.168.56.1:5000");
+                            performWebRequest(documentID,signed_document_id,server_Address);
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .create();
+        dialog.show();
+
     }
 
 

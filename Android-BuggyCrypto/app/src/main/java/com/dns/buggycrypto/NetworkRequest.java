@@ -4,6 +4,7 @@ package com.dns.buggycrypto;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -60,6 +61,8 @@ public class NetworkRequest<T> extends JsonRequest<T> {
                 ObjectMapper mapper = MapperSingleton.getInstance().getMapper();
                 requestString = mapper.writeValueAsString(request);
                 Log.d("Request body", requestString);
+                Toast.makeText(ctx, "Request body : " + requestString.trim(), Toast.LENGTH_LONG).show();
+
             }
         } catch (JsonProcessingException e) {
             Log.e("NetworkRequest", e.getMessage());
