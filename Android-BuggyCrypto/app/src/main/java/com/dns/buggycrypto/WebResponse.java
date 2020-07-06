@@ -15,13 +15,26 @@ public class WebResponse {
     }
 
     public String getWebRequestSignedHash() {
-        return signed_hash;
+        System.out.println("");
+        return message;
     }
 
     public String getRequestStatus() {
         return status;
     }
 
+    public String getsigned_hash() {
+        return signed_hash;
+    }
+
+    public String getstatus() {
+        System.out.println("inside getstatus value of status = "+status);
+        return status;
+    }
+
+    public String getmessage() {
+        return message;
+    }
 
 
     public boolean getSuccess() {
@@ -36,7 +49,7 @@ public class WebResponse {
         this.message = message;
     }
 
-    public void setWebRequestSignedHash(String message) {
+    public void setWebRequestSignedHash(String signed_hash) {
         this.signed_hash = signed_hash;
     }
 
@@ -45,6 +58,17 @@ public class WebResponse {
         this.status = status;
     }
 
+    public void setsigned_hash(String signed_hash) {
+        this.signed_hash = signed_hash;
+    }
+
+    public void setstatus(String status) {
+        this.status = status;
+    }
+
+    public void setmessage(String message) {
+        this.status = message;
+    }
 
 
 

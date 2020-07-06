@@ -38,6 +38,8 @@ public class CryptoClass {
 
 
 
+
+
     //	The initialization vector used by the encryption function
     byte[] ivBytes = {
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
@@ -139,12 +141,38 @@ public class CryptoClass {
         plainText = theString;
         cipherData = CryptoClass.aes256encrypt(ivBytes, keyBytes, plainText.getBytes("UTF-8"));
         cipherText = Base64.encodeToString(cipherData, Base64.DEFAULT);
+       // System.out.println("OKOKOKOKOKOKOKOKOKOKOKOK"+tempVar);
+
+//        String tempVar = tempFunc("someinputfromjava", 6);
+//        System.out.println("tempFunc OP = "+tempVar);
         return cipherText;
     }
 
 
+    public String base64JNIEncryptedString(String theString) throws UnsupportedEncodingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+        // TODO Auto-generated method stub
+
+        String cipherData = tempFunc(theString, 6);
+
+////        byte[] keyBytes = obfuscated_key.getBytes("UTF-8");
+//        plainText = theString;
+//        cipherData = CryptoClass.aes256encrypt(ivBytes, keyBytes, plainText.getBytes("UTF-8"));
+//        cipherText = Base64.encodeToString(cipherData, Base64.DEFAULT);
+//        // System.out.println("OKOKOKOKOKOKOKOKOKOKOKOK"+tempVar);
+
+//        String tempVar = tempFunc("someinputfromjava", 6);
+//        System.out.println("tempFunc OP = "+tempVar);
+        return cipherData;
+    }
+
+
     public native String  stringKeyFromJNI();
+
     public native String  stringObfuscatedKeyFromJNI();
+
+//    public native String  tempFunc("");
+
+    public native String tempFunc(String data,int size);
 
 
 }

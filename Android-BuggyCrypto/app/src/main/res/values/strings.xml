@@ -3,6 +3,7 @@
     <string name="static_key_encryption_file">StaticKeyEncryptionPrefs</string>
     <string name="jni_key_encryption_file">JNIKeyEncryptionPrefs</string>
     <string name="obfuscated_jni_key_encryption_file">ObfuscatedJNIKeyEncryptionPrefs</string>
+    <string name="base64_jni_key_encryption_file">Base64JNIKeyEncryptionPrefs</string>
 
 
 </resources>

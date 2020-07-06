@@ -35,6 +35,7 @@ def decrypt(encrypted_text,key):
     #decrypted_text = decrypt.decode('utf-8')
     decrypted_text = decrypt.decode('utf-8')
     print "########################"
+    #v9B0lVlGzpWe8LQ/2K1Z/xwmoPJehqJ4Qx0wlylIimY= -> 1337133713371338
     print "decrypted_text = ",decrypted_text
     unpadded = unpad(decrypted_text)
     print "unpadded = ",unpadded
@@ -47,7 +48,7 @@ def show_data():
     req_data = request.get_json()
     print req_data
 
-    documentID = req_data['documentId']
+    documentID = req_data['documentId'].strip()
     print "documentID = ",documentID
     signedDocumentID = req_data['signedDocumentID']
     print "signedDocumentID = ",signedDocumentID

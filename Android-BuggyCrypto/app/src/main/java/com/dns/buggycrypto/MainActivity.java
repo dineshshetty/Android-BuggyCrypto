@@ -107,9 +107,13 @@ public class MainActivity extends AppCompatActivity {
         return new Response.Listener<WebResponse>() {
             @Override
             public void onResponse(WebResponse response) {
-
                 if (response.getSuccess()) {
+                    System.out.println("response.getstatus() = "+response.getstatus());
+                    System.out.println("response.message = "+response.message);
+                    System.out.println("response.status = "+response.status);
+
                     System.out.println(response.getWebRequestMessage());
+//                    Log.e("exploitstatus","IN here");
                     System.out.println("Response hash = "+response.getWebRequestSignedHash());
                     System.out.println("Signature Crack Status = "+response.getRequestStatus());
 
@@ -181,6 +185,11 @@ public class MainActivity extends AppCompatActivity {
             }).addButton("Secure AES encryption using Method III", -1, -1, CFAlertDialog.CFAlertActionStyle.NEGATIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, (dialog, which) -> {
                     //"Secure AES encryption using JNI key"
                     doObfuscatedJNICryptoStuff();
+
+                    //   dialog.dismiss();
+
+                }).addButton("Secure encryption using JNI", -1, -1, CFAlertDialog.CFAlertActionStyle.NEGATIVE, CFAlertDialog.CFAlertActionAlignment.JUSTIFIED, (dialog, which) -> {
+                    doBase64EncryptionJNI();
 
                     //   dialog.dismiss();
 
@@ -294,6 +303,52 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    private void doBase64EncryptionJNI() {
+
+        final EditText newTextEditText = new EditText(this);
+        newTextEditText.setSingleLine();
+        newTextEditText.setHint("PlainText Message");
+        //newMasterPassEditText.setTransformationMethod(new PasswordTransformationMethod());
+        //android:inputType="textPassword"
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        lp.setMargins(50,50,50,50);
+        newTextEditText.setLayoutParams(lp);
+        RelativeLayout container = new RelativeLayout(this);
+        RelativeLayout.LayoutParams rlParams=new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+        container.setLayoutParams(rlParams);
+        container.addView(newTextEditText);
+
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("Enter String to Encrypt")
+                //  .setMessage("Summary message")
+                .setView(container)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String newPlainText = String.valueOf(newTextEditText.getText()).trim();
+                        saveInputToPreferenceFile("plaintext_string",newPlainText.trim(),R.string.base64_jni_key_encryption_file);
+
+                        try {
+                            CryptoClass crypt = new CryptoClass();
+                            String cipherText = crypt.base64JNIEncryptedString(newPlainText.trim());
+                            System.out.println(cipherText.trim());
+                            saveInputToPreferenceFile("secure_encrypted_string",cipherText.trim(),R.string.base64_jni_key_encryption_file);
+                            Toast.makeText(MainActivity.this, "After Encryption : " + cipherText.trim(), Toast.LENGTH_LONG).show();
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .create();
+        dialog.show();
+    }
 
     private void doObfuscatedJNICryptoStuff() {
 
@@ -403,5 +458,7 @@ public class MainActivity extends AppCompatActivity {
         editor.commit();
 
     }
+//    public native String tempFunc(String data,int size);
+
 
 }
