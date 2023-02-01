@@ -1,0 +1,7 @@
+Executable : /Users/dns/Library/Android/sdk/cmake/3.18.1/bin/ninja
+arguments : 
+-C
+/Users/dns/Downloads/Android-BuggyCrypto-master/Android-BuggyCrypto/app/.cxx/Debug/5g4z694o/x86_64
+getkey
+jvmArgs : 
+

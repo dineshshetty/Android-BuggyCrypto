@@ -9,13 +9,19 @@
 #include <iostream>
 
 #include <android/log.h>
+//#define APPNAME "getkey.so"
+//#define LOGD(TAG) __android_log_print(ANDROID_LOG_DEBUG , APPNAME,TAG);
+
 #include <unistd.h>
 #include <stdlib.h>
 
 #define SECUREKEY "y0u3c4ntf1ndth1skeyc0zits0s3cur3"
+#define DEBUGKEY "s3cur3d3buGk3y"
+
 
 #define OBFSKEY "@h&#sh$l@n&@de&bf#sc$@e@his&kpls"
 //th0ush4ltn0tde0bfusc4tethis0kpls
+
 
 const char b64chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
@@ -121,4 +127,34 @@ Java_com_dns_buggycrypto_CryptoClass_tempFunc(JNIEnv *env, jobject /* this */, j
     size_t      out_len;
     enc = b64_encode((const unsigned char *)ch, strlen(ch));
     return env->NewStringUTF(enc);
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_dns_buggycrypto_MainActivity_backdoorFunc(JNIEnv *env, jobject thiz, jstring datatojni1, jstring datatojni2) {
+
+    jboolean isCopy;
+    char* nativeString1 = (char*) env->GetStringUTFChars(datatojni1, &isCopy);
+    char* nativeString2 = (char*) env->GetStringUTFChars(datatojni2, &isCopy);
+    return env->NewStringUTF(strcat(nativeString1,nativeString2));
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_dns_buggycrypto_MainActivity_debugFunc1(JNIEnv *env, jobject thiz) {
+
+    //  __android_log_print(ANDROID_LOG_VERBOSE, "BuggyCrypto", "value1:%s",nativeString1);
+    std::string debugkey1 = DEBUGKEY;
+    return env->NewStringUTF(debugkey1.c_str());
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_dns_buggycrypto_MainActivity_debugFunc2(JNIEnv *env, jobject thiz, jstring datatojni1, jstring datatojni2) {
+
+    //  __android_log_print(ANDROID_LOG_VERBOSE, "BuggyCrypto", "value1:%s",nativeString1);
+    jboolean isCopy;
+    char* nativeString1 = (char*) env->GetStringUTFChars(datatojni1, &isCopy);
+    char* nativeString2 = (char*) env->GetStringUTFChars(datatojni2, &isCopy);
+    return env->NewStringUTF(strcat(nativeString1,nativeString2));
 }

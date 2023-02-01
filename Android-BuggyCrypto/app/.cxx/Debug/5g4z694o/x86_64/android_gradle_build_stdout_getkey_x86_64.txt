@@ -1,0 +1,2 @@
+ninja: Entering directory `/Users/dns/Downloads/Android-BuggyCrypto-master/Android-BuggyCrypto/app/.cxx/Debug/5g4z694o/x86_64'
+ninja: no work to do.

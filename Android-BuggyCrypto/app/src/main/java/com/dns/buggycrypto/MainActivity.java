@@ -1,5 +1,6 @@
 package com.dns.buggycrypto;
 
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         showMainCryptoOptions();
-
+        System.out.println(backdoorFunc("SecretCode-is-1337","-7113!"));
         Button saveButton = (Button) findViewById(R.id.buttonShowOptions);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -460,5 +461,18 @@ public class MainActivity extends AppCompatActivity {
     }
 //    public native String tempFunc(String data,int size);
 
+    public native String backdoorFunc(String datatojni,String datatojni2);
+
+    public void debugJavaFunction1() {
+        //Toast.makeText(MainActivity.this, "debugJavaFunction1 called", Toast.LENGTH_LONG).show();
+        System.out.println("debugJavaFunction1 called");
+
+    }
+
+    public void debugJavaFunction2(String key, String value) {
+       // Toast.makeText(MainActivity.this, "debugJavaFunction1 called", Toast.LENGTH_LONG).show();
+        System.out.println("debugJavaFunction2 called");
+
+    }
 
 }

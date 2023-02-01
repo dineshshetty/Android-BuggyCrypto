@@ -1,0 +1,11 @@
+# ninja log v5
+0	437	1675224963	CMakeFiles/getkey.dir/src/main/cpp/getkey.cpp.o	6d9311469fea57d
+437	533	1675224964	../../../../build/intermediates/cxx/Debug/5g4z694o/obj/armeabi-v7a/libgetkey.so	967c9ab8720b5eb0
+0	32	0	clean	f4cc530692c1c22e
+1	21	0	clean	f4cc530692c1c22e
+2	391	1675232791	CMakeFiles/getkey.dir/src/main/cpp/getkey.cpp.o	6d9311469fea57d
+391	507	1675232791	../../../../build/intermediates/cxx/Debug/5g4z694o/obj/armeabi-v7a/libgetkey.so	967c9ab8720b5eb0
+0	21	0	clean	f4cc530692c1c22e
+1	394	1675232807	CMakeFiles/getkey.dir/src/main/cpp/getkey.cpp.o	6d9311469fea57d
+394	500	1675232808	../../../../build/intermediates/cxx/Debug/5g4z694o/obj/armeabi-v7a/libgetkey.so	967c9ab8720b5eb0
+1	17	0	clean	f4cc530692c1c22e

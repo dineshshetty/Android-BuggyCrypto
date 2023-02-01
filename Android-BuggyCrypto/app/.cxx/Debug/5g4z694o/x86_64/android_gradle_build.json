@@ -1,0 +1,38 @@
+{
+  "buildFiles": [
+    "/Users/dns/Downloads/Android-BuggyCrypto-master/Android-BuggyCrypto/app/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/dns/Library/Android/sdk/cmake/3.18.1/bin/ninja",
+      "-C",
+      "/Users/dns/Downloads/Android-BuggyCrypto-master/Android-BuggyCrypto/app/.cxx/Debug/5g4z694o/x86_64",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/dns/Library/Android/sdk/cmake/3.18.1/bin/ninja",
+    "-C",
+    "/Users/dns/Downloads/Android-BuggyCrypto-master/Android-BuggyCrypto/app/.cxx/Debug/5g4z694o/x86_64",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "getkey::@6890427a1f51a3e7e1df": {
+      "toolchain": "toolchain",
+      "abi": "x86_64",
+      "artifactName": "getkey",
+      "output": "/Users/dns/Downloads/Android-BuggyCrypto-master/Android-BuggyCrypto/app/build/intermediates/cxx/Debug/5g4z694o/obj/x86_64/libgetkey.so",
+      "runtimeFiles": []
+    }
+  },
+  "toolchains": {
+    "toolchain": {
+      "cCompilerExecutable": "/Users/dns/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang.lld",
+      "cppCompilerExecutable": "/Users/dns/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++.lld"
+    }
+  },
+  "cFileExtensions": [],
+  "cppFileExtensions": [
+    "cpp"
+  ]
+}

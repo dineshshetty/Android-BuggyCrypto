@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/Users/dns/Downloads/Android-BuggyCrypto-master/Android-BuggyCrypto/app/.cxx/Debug/5g4z694o/arm64-v8a",
+  "command": "/Users/dns/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android21 --sysroot=/Users/dns/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Dgetkey_EXPORTS -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -fno-limit-debug-info  -fPIC -o CMakeFiles/getkey.dir/src/main/cpp/getkey.cpp.o -c /Users/dns/Downloads/Android-BuggyCrypto-master/Android-BuggyCrypto/app/src/main/cpp/getkey.cpp",
+  "file": "/Users/dns/Downloads/Android-BuggyCrypto-master/Android-BuggyCrypto/app/src/main/cpp/getkey.cpp"
+}
+]
