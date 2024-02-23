@@ -1,0 +1,27 @@
+{
+  "buildFiles": [
+    "/Users/dns/updated_android_projects/Android-BuggyCrypto/Android-BuggyCrypto/app/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/dns/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/dns/updated_android_projects/Android-BuggyCrypto/Android-BuggyCrypto/app/.cxx/Debug/57b695g1/armeabi-v7a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/dns/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/dns/updated_android_projects/Android-BuggyCrypto/Android-BuggyCrypto/app/.cxx/Debug/57b695g1/armeabi-v7a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "getkey::@6890427a1f51a3e7e1df": {
+      "artifactName": "getkey",
+      "abi": "armeabi-v7a",
+      "output": "/Users/dns/updated_android_projects/Android-BuggyCrypto/Android-BuggyCrypto/app/build/intermediates/cxx/Debug/57b695g1/obj/armeabi-v7a/libgetkey.so",
+      "runtimeFiles": []
+    }
+  }
+}

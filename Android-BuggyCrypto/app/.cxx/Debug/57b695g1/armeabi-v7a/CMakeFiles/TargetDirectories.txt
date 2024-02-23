@@ -1,0 +1,3 @@
+/Users/dns/updated_android_projects/Android-BuggyCrypto/Android-BuggyCrypto/app/.cxx/Debug/57b695g1/armeabi-v7a/CMakeFiles/getkey.dir
+/Users/dns/updated_android_projects/Android-BuggyCrypto/Android-BuggyCrypto/app/.cxx/Debug/57b695g1/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/dns/updated_android_projects/Android-BuggyCrypto/Android-BuggyCrypto/app/.cxx/Debug/57b695g1/armeabi-v7a/CMakeFiles/rebuild_cache.dir

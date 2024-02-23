@@ -158,3 +158,4 @@ Java_com_dns_buggycrypto_MainActivity_debugFunc2(JNIEnv *env, jobject thiz, jstr
     char* nativeString2 = (char*) env->GetStringUTFChars(datatojni2, &isCopy);
     return env->NewStringUTF(strcat(nativeString1,nativeString2));
 }
+

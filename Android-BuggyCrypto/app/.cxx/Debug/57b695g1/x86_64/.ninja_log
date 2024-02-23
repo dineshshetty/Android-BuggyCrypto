@@ -1,0 +1,4 @@
+# ninja log v5
+0	202	1708655907241922599	CMakeFiles/getkey.dir/src/main/cpp/getkey.cpp.o	861322ce66365eff
+202	266	1708655907290963100	../../../../build/intermediates/cxx/Debug/57b695g1/obj/x86_64/libgetkey.so	ec3d388bd96714be
+0	5	0	clean	fd6696f63507d51b

@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/Users/dns/updated_android_projects/Android-BuggyCrypto/Android-BuggyCrypto/app/.cxx/Debug/375i466u/x86",
+  "command": "/Users/dns/Library/Android/sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=i686-none-linux-android16 --sysroot=/Users/dns/Library/Android/sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Dgetkey_EXPORTS -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -fexceptions -frtti -stdlib=libc++ -g  -fno-limit-debug-info -fPIC -o CMakeFiles/getkey.dir/src/main/cpp/getkey.cpp.o -c /Users/dns/updated_android_projects/Android-BuggyCrypto/Android-BuggyCrypto/app/src/main/cpp/getkey.cpp",
+  "file": "/Users/dns/updated_android_projects/Android-BuggyCrypto/Android-BuggyCrypto/app/src/main/cpp/getkey.cpp"
+}
+]

@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/Users/dns/updated_android_projects/Android-BuggyCrypto/Android-BuggyCrypto/app/.cxx/Debug/57b695g1/armeabi-v7a",
+  "command": "/Users/dns/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=armv7-none-linux-androideabi24 --sysroot=/Users/dns/Library/Android/sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Dgetkey_EXPORTS -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security   -fno-limit-debug-info  -fPIC -o CMakeFiles/getkey.dir/src/main/cpp/getkey.cpp.o -c /Users/dns/updated_android_projects/Android-BuggyCrypto/Android-BuggyCrypto/app/src/main/cpp/getkey.cpp",
+  "file": "/Users/dns/updated_android_projects/Android-BuggyCrypto/Android-BuggyCrypto/app/src/main/cpp/getkey.cpp"
+}
+]
